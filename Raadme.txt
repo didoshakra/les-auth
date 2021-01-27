@@ -1,0 +1,97 @@
+//GH:les-auth//Назва на GitHub
+//_lesson-video-next-2021_rob
+NextJS Быстрый Курс - SSR на React JS [2020]
+https://www.youtube.com/watch?v=_EOrSmjdOZQ&ab_channel=%D0%92%D0%BB%D0%B0%D0%B4%D0%B8%D0%BB%D0%B5%D0%BD%D0%9C%D0%B8%D0%BD%D0%B8%D0%BD
+==================================================================
+npm run serve/yarn serve --> http://localhost:3000/
+=====================================================================
+  Таймкоды:
+  00:00 - Что такое SSR и Next
+  14:36 - Установка Next
+  20:40 - Начало работы
+  25:54 - Роутинг и навигация
+  49:15 - SEO + Meta
+  54:40 - Создание Layout
+1:06:29 - Стили, модули, SASS
+1:14:48 - Страница 404
+1:22:14 - Создание API мок сервера
+1:33:30 - Загрузка данных
+1:57:05 - getServerSideProps
+2:00:30 - Индикатор загрузки
+2:07:15 - Создание API
+2:13:00 - TypeScript
+2:26:40 - Next Config
+2:34:12 - Классные рекомендации
+1. Компоненти
+2. Маршрутизація: <Link href="/about">
+    програмна (кнопки):  <button onClick={() => Router.push("/posts")}>
+    динамічна: <Link href={`/post/[id]`} as={`/post/${post.id}`}>
+3. Фейковий rest Server  //https://code.tutsplus.com/ru/tutorials/fake-rest-api-up-and-running-using-json-server--cms-27871
+    REST (скор. англ. Representational State Transfer, «передача репрезентативного стану»
+    *** npm install -g json-server
+4. Обночасний запуск декількох скрипрів(concurrently) (next i фейковий сервер )
+  package.json
+    "scripts": {
+      "start": "next start",
+      "mock": "json-server -w db.json -p 4200 -d 450"  //-d 450-затримка в мсек -p4200-порт
+      "serve":"concurrently \"npm run dev\"\"npm run mock\"",
+    *** npm i -D concurrently
+5. Стилі:
+    **глобальні стилі/підключення зовнішніх скріптів/Фонт font-family: "Roboto Condensed", sans-serif;
+      _document.js:
+        <Head>
+            <link
+              href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+              rel="stylesheet"
+            />
+          </Head>
+      _app.js:
+        import "../styles/main.css";
+        //  В першу чергу приміняються стилі з /style jsx global/, а потім імпортовані import "../styles/main.css";
+        ...
+        <style jsx global>{`
+          body {
+            font-family: "Roboto Condensed", sans-serif;
+          }
+        `}</style>
+    **локальні стилі:
+      import classes from "../styles/error.module.css";
+      ...
+      <h1 className={classes.error}>
+    **<style jsx>{`body {... }`}</style>
+    **SAS
+
+6. Page 404/Сторінка помилки
+
+7. Загрузка даних (SSR/SSG/SWR)
+    getInitialProps = async (ctx) => {//устарів
+    getServerSideProps(ctx) {це бібліотека для віддаленого отримання даних./працює тільки на сервері
+    SWR - це бібліотека React Hooks для віддаленого отримання даних на клієнті
+    *** npm install swr
+
+8. Індикатор загрузки //https://www.npmjs.com/package/nextjs-progressbar
+    *** npm i nextjs-progressbar
+
+9. Ip AndPoint (pages/API)
+
+10.next.config.js//nextjs.org/docs/api-reference/next.config.js/environment-variables
+========================================================================================
+ vrob20210105-SSR-SSG-SWR продовження _lesson-video-next-2021_rob
+ Добавлення:
+  Серверний рендеринг:
+    Генерація статичної сторінки. Вона утворюється прикомпіляції APP(build) і проявляється прм syart(запуску відкомпільованогопроекту)
+      getStaticProps //https://nextjs.org/docs/basic-features/data-fetching#when-should-i-use-getstaticprops
+      GetStaticPaths https://nextjs.org/docs/basic-features/data-fetching#when-should-i-use-getstaticpaths
+    Отримання сторінки з поточними даними з на основі запиту
+      GetServerSideProps //https://nextjs.org/docs/basic-features/data-fetching#when-should-i-use-getserversideprops
+
+  Кліедиський рендеринг:
+    SWR //https://nextjs.org/docs/basic-features/data-fetching#only-allowed-in-a-page-2
+      Назва "SWR" походить від stale-while-revalidateстратегії девальвації кешу HTTP, популяризованої HTTP RFC 5861 .
+       SWR - це стратегія спочатку повернути дані з кеш-пам'яті (застаріла),
+        потім надіслати запит на отримання (повторно перевірити) і, нарешті, надіслати актуальні дані.
+      За допомогою SWR компоненти отримуватимуть потік оновлень даних постійно та автоматично.І інтерфейс завжди буде швидким та реактивним .
+
+//20200126- добавляємо 0Auth Як використовувати з NextAuth.js для автентифікації на стороні клієнта в Next.js
+      https://blog.logrocket.com/how-to-use-nextauth-js-for-client-side-authentication-in-next-js/
+  npm i next-auth //Добавляєм next-auth
